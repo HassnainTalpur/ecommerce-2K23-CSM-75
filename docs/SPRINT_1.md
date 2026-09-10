@@ -101,6 +101,8 @@ Caching and asynchronous processing are not required for the initial MVP scope. 
 
 The database design follows a relational model containing users, products, categories, shopping carts, and order management entities.
 
+The schema defines primary keys (PK), foreign keys (FK), SQL-compatible data types, and relationship cardinalities between entities.
+
 ## Relationships
 
 - One user can place many orders (1:N)
@@ -110,7 +112,6 @@ The database design follows a relational model containing users, products, categ
 - One product can appear in many cart items (1:N)
 - One order contains many order items (1:N)
 - One product can appear in many order items (1:N)
-
 
 ```mermaid
 erDiagram
@@ -129,27 +130,27 @@ erDiagram
 
     USERS {
         INTEGER id PK
-        VARCHAR name
-        VARCHAR email
-        VARCHAR password_hash
-        VARCHAR phone
+        VARCHAR(100) name
+        VARCHAR(150) email
+        VARCHAR(255) password_hash
+        VARCHAR(20) phone
         TIMESTAMP created_at
     }
 
 
     CATEGORIES {
         INTEGER id PK
-        VARCHAR name
-        VARCHAR description
+        VARCHAR(100) name
+        VARCHAR(255) description
     }
 
 
     PRODUCTS {
         INTEGER id PK
         INTEGER category_id FK
-        VARCHAR name
-        VARCHAR description
-        DECIMAL price
+        VARCHAR(150) name
+        VARCHAR(500) description
+        DECIMAL(10,2) price
         INTEGER stock_quantity
         TIMESTAMP created_at
     }
@@ -173,8 +174,8 @@ erDiagram
     ORDERS {
         INTEGER id PK
         INTEGER user_id FK
-        DECIMAL total_amount
-        VARCHAR status
+        DECIMAL(10,2) total_amount
+        VARCHAR(50) status
         TIMESTAMP created_at
     }
 
@@ -184,5 +185,5 @@ erDiagram
         INTEGER order_id FK
         INTEGER product_id FK
         INTEGER quantity
-        DECIMAL unit_price
+        DECIMAL(10,2) unit_price
     }
